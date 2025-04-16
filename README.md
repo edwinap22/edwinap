@@ -1,145 +1,158 @@
-   }
-   }
-   
-   }
-   
-   function firework(x, y) {
-   this.pos = new vector(x, y);
-   this.vel = new vector(0, -rndNum(10) - 3);
-   this.color = 'hsl(' + rndNum(360) + ', 100%, 50%)'
-   this.size = 4;
-   this.finish = false;
-   this.start = 0;
-   let exParticles = [], exPLen = 100;
-   
-   let rootShow = true;
-   
-   this.update = function(time) {
-   if (this.finish) {
-   return;
-   }
-   
-   rootShow = this.vel.y < 0;
-   
-   if (rootShow) {
-   this.pos.add(this.vel);
-   this.vel.y = this.vel.y + gravity;
-   } else {
-   if (exParticles.length === 0) {
-   flash = true;
-   for (let i = 0; i < exPLen; i++) {
-   exParticles.push(new particle(this.pos, new vector(-rndNum(10) + 5, -rndNum(10) + 5)));
-   exParticles[exParticles.length - 1].start = time;
-   }
-   }
-   let countFinish = 0;
-   for (let i = 0; i < exPLen; i++) {
-   let p = exParticles[i];
-   p.update(time);
-   if (p.finish) {
-   countFinish++;
-   }
-   }
-   
-   if (countFinish === exPLen) {
-   this.finish = true;
-   }
-   
-   }
-   }
-   
-   this.draw = function() {
-   if (this.finish) {
-   return;
-   }
-   
-   ctx.fillStyle = this.color;
-   if (rootShow) {
-   drawDot(this.pos.x, this.pos.y, this.size);
-   } else {
-   for (let i = 0; i < exPLen; i++) {
-   let p = exParticles[i];
-   p.draw();
-   }
-   }
-   }
-   
-   }
-   
-   function drawDot(x, y, size) {
-   ctx.beginPath();
-   
-   ctx.arc(x, y, size, 0, Math.PI * 2);
-   ctx.fill();
-   
-   ctx.closePath();
-   }
-   
-   var fireworks = [],
-   gravity = 0.2,
-   snapTime = 0,
-   flash = false;
-   
-   function init() {
-   let numOfFireworks = 20;
-   for (let i = 0; i < numOfFireworks; i++) {
-   fireworks.push(new firework(rndNum(canvas.width), canvas.height));
-   }
-   }
-   
-   function update(time) {
-   for (let i = 0, len = fireworks.length; i < len; i++) {
-   let p = fireworks[i];
-   p.update(time);
-   }
-   }
-   
-   function draw(time) {
-   update(time);
-   
-   ctx.fillStyle = 'rgba(0,0,0,0.3)';
-   if (flash) {
-   flash = false;
-   }
-   ctx.fillRect(0, 0, canvas.width, canvas.height);
-   
-   ctx.fillStyle = 'white';
-   ctx.font = "30px Segoe UI";
-   let newTime = time - snapTime;
-   snapTime = time;
-   
-   ctx.fillStyle = 'blue';
-   for (let i = 0, len = fireworks.length; i < len; i++) {
-   let p = fireworks[i];
-   if (p.finish) {
-   fireworks[i] = new firework(rndNum(canvas.width), canvas.height);
-   p = fireworks[i];
-   p.start = time;
-   }
-   p.draw();
-   }
-   
-   window.requestAnimationFrame(draw);
-   }
-   
-   window.addEventListener('resize', function() {
-   canvas.width = canvas.clientWidth;
-   canvas.height = canvas.clientHeight;
-   });
-   
-   init();
-   draw();
-   </script>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
 
-<html>
-	<head>
-		<body>
-			<body bgcolor="black"><center><br>
-			<font face="Abel" size="6px" color="grey"><b></b>
-			<br><font size="3px">
-			<font color="white">[ </font><marquee scrollamount="5" width="630" height="20" behavior="alternate">Selamat ulang tahun Dek. Semoga panjang umur, murah rejeki, dan sehat selalu. Ingat selalu pesan kakak! Jaga kehormatan dan wibawa keluarga kita!</marquee><font color="white"> ]</font>
-			<br><br><font size="3px" face="Ubuntu Condensed">
-		</body>
-	</font>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+  <title>Happy Birthday Honey!!! :)</title>
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+  <!-- My Style -->
+  <link rel="stylesheet" href="./style/main.css" />
+</head>
+
+<body>
+
+    <audio class="song" loop autoplay>
+        <source src="./music/hbd.mpeg">
+        </source>
+        Your browser isn't invited for super fun audio time.
+    </audio>
+
+    <div class="container">
+        <div class="one">
+            <h1 class="one">
+                Hi
+                <span id="name">Irene</span>
+            </h1>
+            <p class="two" id="greetingText">I really like your name btw!</p>
+        </div>
+
+        <div class="three">
+            <p>It's your birthday!! :D</p>
+        </div>
+
+        <div class="four">
+            <div class="text-box">
+                <p class="hbd-chatbox">
+                Happy birthday to youu!! Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur quisquam amet ipsam vitae, voluptatum architecto aliquid id quo error tempora quos aperiam magni necessitatibus quas ut, possimus nesciunt nam ad.
+                </p>
+                <p class="fake-btn">Send</p>
+            </div>
+        </div>
+
+        <div class="five">
+            <p class="idea-1">That's what I was going to do.</p>
+            <p class="idea-2">But then I stopped.</p>
+            <p class="idea-3">
+                I realised, I wanted to do something<br>
+                <strong>special</strong>
+                .
+            </p>
+            <p class="idea-4">Because,</p>
+            <p class="idea-5">
+                You are Special
+                <span>:)</span>
+            </p>
+            <p class="idea-6">
+                <span>S</span>
+                <span>O</span>
+            </p>
+        </div>
+
+        <div class="six">
+            <img src="./img/irene.jpg" alt="profile" class="profile-picture" id="imagePath"/>
+            <img src="img/hat.svg" alt="hat" class="hat" />
+            <div class="wish">
+                <h3 class="wish-hbd">Happy Birthday!</h3>
+                <h5 id="wishText">May the js.prototypes always be with you! ;)</h5>
+            </div>
+        </div>
+
+        <div class="seven">
+            <div class="baloons">
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon2.svg" alt="" />
+                <img src="img/ballon1.svg" alt="" />
+                <img src="img/ballon3.svg" alt="" />
+            </div>
+        </div>
+
+        <div class="eight">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" />
+            </svg>
+        </div>
+
+        <div class="nine">
+            <p>Okay, now come back and tell me if you liked it.</p>
+            <p id="replay">Or click, if you want to watch it again.</p>
+            <p class="last-smile">:)</p>
+        </div>
+    </div>
+
+</body>
+    <!-- Greensock -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <!-- Sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="application/javascript" src="./script/main.js"></script>
+
+</html>
